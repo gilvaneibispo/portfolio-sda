@@ -19,10 +19,8 @@ import portfolio.sda.ultil.Helper;
 public final class Server {
 
     private final ServerSocket servidor;
-    private final ServerSocket serIm;
     private Socket representaCliente;
     private static final int PORTA = 3636;
-    private static final int PIMG = 5566;
 
     /**
      * <strong>Construtor Servidor: </strong>
@@ -33,8 +31,6 @@ public final class Server {
     public Server() throws IOException {
         
         servidor = new ServerSocket(PORTA);
-        serIm = new ServerSocket(PIMG);
-        // this.desserializaDados();
         System.out.println("Servidor em funcionamento...");
     }
 
@@ -52,7 +48,6 @@ public final class Server {
         while (true) {
 
             representaCliente = servidor.accept();
-            Socket imm = serIm.accept();
 
             System.out.println("Nova conexão com " + representaCliente.getInetAddress().getHostAddress());
 

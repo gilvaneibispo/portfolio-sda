@@ -31,7 +31,7 @@ public class MulticastSender {
         byte[] buffer = data.getBytes();
         DatagramPacket packet = new DatagramPacket(buffer, buffer.length, this.address, PORT);
 
-        //Enviando...
+        //Enviando Mensagem...
         socket.send(packet);
     }
 }

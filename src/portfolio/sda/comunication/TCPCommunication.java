@@ -25,7 +25,7 @@ public class TCPCommunication {
     private String mensagem;                            //Mensagem para envio.
     private final Socket clienteSocket;                 //Objeto Socket para comunicação.
     private DataOutputStream objetoDeSaida;             //Objeto de saida de dados.
-    private BufferedReader objetoDeEntrada;               //Objeto de recepção de dados.
+    private BufferedReader objetoDeEntrada;             //Objeto de recepção de dados.
 
     /**
      * <strong>Contrutor: </strong>

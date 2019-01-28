@@ -15,8 +15,8 @@ public class DataSerializer {
 
     /**
      * <strong>Serializa Dados: </strong>
-     * ResponsÃ¡vel pela persistÃªncia de uma lista do objeto Conta. Ã‰ chamada
-     * no final de cada mÃ©todo capaz de alterar algum dado contido nelaclasse,
+     * Responsável pela persistência de uma lista do objeto Conta. É chamada
+     * no final de cada método capaz de alterar algum dado contido nelaclasse,
      * garantindo a disponibilidade da informaÃ§Ã£o correta e atualizada.
      */
     public void serializaDados() {
@@ -33,8 +33,8 @@ public class DataSerializer {
 
     /**
      * <strong>Desserializa Dados: </strong>
-     * Com a funcionalidade complementar ao mÃ©todo serializaDados(), esta
-     * classe tem o dever de recuperar o as informaÃ§Ãµes. Ã‰ chamada no
+     * Com a funcionalidade complementar ao método serializaDados(), esta
+     * classe tem o dever de recuperar o as informações. É chamada no
      * construtor dasta classe, garantido que os dados estarÃ£o a disposiÃ§Ã£o
      * semprenque esta classe estiver em funcionamento.
      */
@@ -49,7 +49,7 @@ public class DataSerializer {
         } catch (IOException ioe) {
             System.out.println(ioe.getMessage());
         } catch (ClassNotFoundException c) {
-            System.out.println("Erro na recuperaÃ§Ã£o dos dados: " + c.getMessage());
+            System.out.println("Erro na recuperação dos dados: " + c.getMessage());
         }
     }
 }

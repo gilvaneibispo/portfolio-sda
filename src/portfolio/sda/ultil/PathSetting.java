@@ -5,6 +5,7 @@ package portfolio.sda.ultil;
  */
 public class PathSetting {
 
+    //Todas as rotas
     public static final String ROOT_PATH_PROJECT = System.getProperty("user.dir") + "\\";
     public static final String IMAGE_PATH = System.getProperty("user.dir") + "\\src\\portfolio\\sda\\imgs\\";
     public static final String PATH_IMG_PROFILE = IMAGE_PATH + "profile\\";

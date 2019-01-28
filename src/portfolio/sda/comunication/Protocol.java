@@ -10,6 +10,7 @@ package portfolio.sda.comunication;
  * @author Gilvanei
  */
 public class Protocol {
+    //Exemplos de protocolos
     public static final int GROUP_CREATE = 1;
     public static final int EXEMPLE_TWO = 2;
 }

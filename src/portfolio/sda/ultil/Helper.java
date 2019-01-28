@@ -41,6 +41,9 @@ public class Helper {
         return num + "";
     }
     
+    /** 
+     * Cria uma string unindo os camps e separando pelo elemento divisor.
+     */
     public static void messageEncode(){
         
     }

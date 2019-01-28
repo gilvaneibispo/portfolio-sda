@@ -12,9 +12,9 @@ import portfolio.sda.ultil.Helper;
 /**
  * <strong>ClienteThread: </strong>
  * Cada instÃ¢ncia desta classe roda dentro de uma thread no servidor, causando
- * independencia entre as solicitaÃ§Ãµes de n clientes ao servidor. Recebe em
+ * independencia entre as solicitações de vários clientes ao servidor. Recebe em
  * seu construtor uma instÃ¢ncia do servidor (todas as threads conhece a mesma
- * instÃ¢ncia) e outra do socket responsÃ¡vel por ler os dados de um especifico
+ * instÃ¢ncia) e outra do socket responsável por ler os dados de um especifico
  * cliente.
  */
 public class CommunicationServer implements Runnable {
@@ -101,8 +101,7 @@ public class CommunicationServer implements Runnable {
 
     /**
      * <strong>Responde Cliente: </strong>
-     * SaÃ­da de dados servidor/cliente, Ã© chamada principalmente na classe
-     * PadraoComunicacao
+     * Saída de dados servidor/cliente.
      *
      * @param sentenca
      * @throws IOException
