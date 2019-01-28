@@ -3,15 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package portfolio.sda.comunication;
+package portfolio.sda.model;
+
+import java.io.File;
+import java.util.ArrayList;
 
 /**
  *
  * @author Gilvanei
  */
-public class MulticastCommunication {
+public class Group {
     
-    public void checarProtocolo(String msg){
-        
-    }
+    private String name;
+    private ArrayList<File> pathPosts;
+    
+    
 }

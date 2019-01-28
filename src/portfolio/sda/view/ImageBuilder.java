@@ -1,4 +1,4 @@
-package portfolio.sda.ultil;
+package portfolio.sda.view;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.imageio.ImageIO;
+import portfolio.sda.ultil.PathSetting;
 
 /**
  * @author Gilvanei e Kelvin

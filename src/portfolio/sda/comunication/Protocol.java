@@ -9,9 +9,7 @@ package portfolio.sda.comunication;
  *
  * @author Gilvanei
  */
-public class MulticastCommunication {
-    
-    public void checarProtocolo(String msg){
-        
-    }
+public class Protocol {
+    public static final int GROUP_CREATE = 1;
+    public static final int EXEMPLE_TWO = 2;
 }

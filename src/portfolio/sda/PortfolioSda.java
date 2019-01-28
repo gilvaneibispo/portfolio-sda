@@ -3,7 +3,7 @@ package portfolio.sda;
 import java.io.File;
 import java.io.IOException;
 import portfolio.sda.ultil.Helper;
-import portfolio.sda.ultil.ImageBuilder;
+import portfolio.sda.view.ImageBuilder;
 import portfolio.sda.ultil.PathSetting;
 
 /**

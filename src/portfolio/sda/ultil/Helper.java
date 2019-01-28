@@ -18,4 +18,34 @@ public class Helper {
         return filename.contains(".") ? filename.substring(
                 filename.lastIndexOf(".") + 1) : null;
     }
+    
+    public static void printError(Exception ex){
+        System.err.println(ex.getMessage());
+    }
+    
+     /**
+     * Recebe um numero inteiro e transforma em string.
+     * @param num
+     * @return 
+     */
+    public static String numberToString(int num){
+        return num + "";
+    }
+    
+    /**
+     * Recebe um numero double e transforma em string.
+     * @param num
+     * @return 
+     */
+    public static String numberToString(double num){
+        return num + "";
+    }
+    
+    public static void messageEncode(){
+        
+    }
+    
+    public static String[] messageDencode(){
+        return null;
+    }
 }
