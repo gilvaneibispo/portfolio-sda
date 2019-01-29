@@ -11,6 +11,6 @@ package portfolio.sda.comunication;
  */
 public class Protocol {
     //Exemplos de protocolos
-    public static final int GROUP_CREATE = 1;
-    public static final int EXEMPLE_TWO = 2;
+    public static final int FAZER_LOGIN = 1;
+    public static final int RESPOSTA_LOGIN = 2;
 }

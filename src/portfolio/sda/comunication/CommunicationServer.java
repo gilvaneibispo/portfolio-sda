@@ -6,7 +6,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.StringTokenizer;
+import portfolio.sda.model.Pessoa;
 import portfolio.sda.ultil.Helper;
 
 /**
@@ -23,6 +26,8 @@ public class CommunicationServer implements Runnable {
     private String[] dadosDoCliente;                  //Para dados vindo do cliente.
     private DataOutputStream objetoDeSaida;      //Objeto do saida de dados.
     private BufferedReader recebeDoCliente;         //Para recepÃ§Ã£o de dados.
+    private StringTokenizer tokens;
+    private ArrayList<Pessoa> listaUsers;
 
     /**
      * <strong>Construtor ClienteThread: </strong>
@@ -35,6 +40,7 @@ public class CommunicationServer implements Runnable {
     public CommunicationServer(Socket cliente) throws IOException {
 
         this.representaCliente = cliente;
+        listaUsers = new ArrayList();
     }
 
     @Override
@@ -65,12 +71,12 @@ public class CommunicationServer implements Runnable {
 
                 String dados = recebeDoCliente.readLine();
 
-                StringTokenizer tokens = new StringTokenizer(dados, "#");
+                tokens = new StringTokenizer(dados, "#");
                 checarProtocolo(Integer.parseInt(tokens.nextToken()));
                 
                 while (tokens.hasMoreTokens()) {
-                   
-                    System.out.println(tokens.nextToken());
+            
+                    //System.out.println(tokens.nextToken());
                 }
 
                 //dadosDoCliente = dados.split("#");                               
@@ -88,11 +94,14 @@ public class CommunicationServer implements Runnable {
     private void checarProtocolo(int acao) throws IOException {
 
         switch (acao) {
-            case Protocol.GROUP_CREATE:
-                //Ação aqui...
-                enviarMensagem("1#Outra mensagem como resposta");
+            case Protocol.FAZER_LOGIN:
+                
+                //Varificar existência de usuário...
+                String nickName = tokens.nextToken();
+                String senha = tokens.nextToken();
+                loginUser(nickName, senha);
                 break;
-            case Protocol.EXEMPLE_TWO:
+            //case Protocol.EXEMPLE_TWO:
             //Ação aqui...
             default:
                 Helper.printError(new Exception("Protocolo inválido"));
@@ -108,5 +117,24 @@ public class CommunicationServer implements Runnable {
      */
     public void enviarMensagem(String sentenca) throws IOException {
         objetoDeSaida.writeBytes(sentenca + "\n");
+    }
+    
+    private void loginUser(String nickName, String senha){
+        
+        if(userExists(nickName, senha)){
+         
+            //retornar os dados dos grupos.
+        }        
+    }
+    
+    private boolean userExists(String nickName, String senha){
+        Iterator itera = listaUsers.iterator();
+         while (itera.hasNext()) {
+            Pessoa pessoa = (Pessoa) itera.next();
+            if(pessoa.getNick().equals(nickName) || pessoa.getSenha().equals(senha)){
+                return true;
+            }
+        }
+         return false;
     }
 }
