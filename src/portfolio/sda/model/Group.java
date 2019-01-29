@@ -6,14 +6,27 @@
 package portfolio.sda.model;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author Gilvanei
  */
-public class Group {
+public class Group implements Serializable{
     
-    private String name;   
+    private String name;
+    private String ip;
     
+    public void setName(String n){
+        name = n;
+    }
+    
+    public void setIpMulcast(String ip){
+        this.ip = ip;
+    }
+    
+    public String getName(){
+        return name;
+    }
 }

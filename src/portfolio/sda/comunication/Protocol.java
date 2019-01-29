@@ -13,4 +13,5 @@ public class Protocol {
     //Exemplos de protocolos
     public static final int FAZER_LOGIN = 1;
     public static final int RESPOSTA_LOGIN = 2;
+    public static final int RESPOSTA_LOGIN_FALHOU = 3;
 }

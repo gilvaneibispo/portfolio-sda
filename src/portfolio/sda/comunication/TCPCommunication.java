@@ -1,11 +1,13 @@
 package portfolio.sda.comunication;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.StringTokenizer;
+import java.util.ArrayList;
+import java.util.Scanner;
+import portfolio.sda.model.Group;
+import portfolio.sda.ultil.DataSender;
 import portfolio.sda.ultil.Helper;
 
 /**
@@ -24,8 +26,11 @@ public class TCPCommunication {
     private static final int PORTA = 3636;              //Porta de comunicação.
     private String mensagem;                            //Mensagem para envio.
     private final Socket clienteSocket;                 //Objeto Socket para comunicação.
-    private DataOutputStream objetoDeSaida;             //Objeto de saida de dados.
-    private BufferedReader objetoDeEntrada;             //Objeto de recepção de dados.
+    private ObjectOutputStream objetoDeSaida;             //Objeto de saida de dados.
+    //private BufferedReader objetoDeEntrada;             //Objeto de recepção de dados.
+    private ObjectInputStream objetoDeEntrada;
+    private ArrayList<Group> listGroup;
+    private DataSender dados;
 
     /**
      * <strong>Contrutor: </strong>
@@ -35,8 +40,9 @@ public class TCPCommunication {
      * @throws IOException
      */
     public TCPCommunication() throws IOException {
-        
+
         clienteSocket = new Socket(HOST, PORTA);
+        listGroup = new ArrayList();
     }
 
     /**
@@ -46,26 +52,79 @@ public class TCPCommunication {
      * propriamente dita. Desde o envia a recepção e o encaminhamento das
      * mensagens.
      *
-     * @param msg
      * @throws IOException
+     * @throws java.lang.ClassNotFoundException
      */
-    public void executa(String msg) throws IOException {
-        
-        mensagem = msg;
-        objetoDeSaida = new DataOutputStream(clienteSocket.getOutputStream());
-        objetoDeEntrada = new BufferedReader(new InputStreamReader(clienteSocket.getInputStream(), "UTF-8"));
-        objetoDeSaida.writeBytes(mensagem + "\n");
+    public void executa() throws IOException, ClassNotFoundException {
 
-        StringTokenizer tokens = new StringTokenizer(objetoDeEntrada.readLine(), "#");
-        int tokenUm = Integer.parseInt(tokens.nextToken());
+        objetoDeSaida = new ObjectOutputStream(clienteSocket.getOutputStream());
+        objetoDeEntrada = new ObjectInputStream(clienteSocket.getInputStream());
 
-        mensagem = "";
-        
-        while (tokens.hasMoreTokens()) {
-            mensagem = mensagem + " " + tokens.nextToken();
+        boolean saiu = false;
+
+        while (!saiu) {
+
+            System.out.printf(" 1 - Fazer login \n 9 - Para sair \n\t Opção desejada: ");
+            Scanner ler = new Scanner(System.in);
+
+            int acao = ler.nextInt();
+
+            switch (acao) {
+                case 1:
+                    solicitarLogin();
+                    break;
+                case 2:
+                    ///
+                    break;
+                default:
+                    System.err.println("Ação não existe!");
+            }
+
+            //mensagem = msg;
+            //objetoDeEntrada = new BufferedReader(new InputStreamReader(clienteSocket.getInputStream(), "UTF-8"));
+            //objetoDeSaida.writeBytes(mensagem + "\n");
+            //StringTokenizer tokens = new StringTokenizer(objetoDeEntrada.readLine(), "#");
+            //int tokenUm = Integer.parseInt(tokens.nextToken());
+            //while (tokens.hasMoreTokens()) {
+            //mensagem = mensagem + " " + tokens.nextToken();
+            //}
+            Object classe = objetoDeEntrada.readObject();
+
+            if (classe instanceof DataSender) {
+                dados = (DataSender) classe;
+            }
+
+            checarProtocolo(dados.getProtocolo());
+            System.out.println("+ - - - - - - - - - - - - - +");
         }
-        
-        checarProtocolo(tokenUm);
+    }
+
+    private void enviarMensagem(DataSender d) throws IOException {
+
+        objetoDeSaida.writeObject(d);
+    }
+
+    public void solicitarLogin() throws IOException {
+
+        DataSender d = new DataSender(Protocol.FAZER_LOGIN);
+
+        System.out.printf("\t Informe o nickname: ");
+        Scanner ler = new Scanner(System.in);
+        String nick = ler.nextLine();
+
+        System.out.printf("\t Informe a senha: ");
+        //Scanner ler = new Scanner(System.in);
+        String pass = ler.nextLine();
+        //d.setSenha();
+
+        System.out.println("+ - - - - - - - - - - - - - +");
+        System.out.println("Aguardando a resposta da solicitação...");
+
+        d.setSenha(pass);
+        d.setNick(nick);
+
+        enviarMensagem(d);
+        return;
     }
 
     /**
@@ -78,7 +137,7 @@ public class TCPCommunication {
      */
     public boolean encerrarConexao() throws IOException {
         try {
-            
+
             clienteSocket.close();
             objetoDeSaida.close();
             return true;
@@ -90,25 +149,34 @@ public class TCPCommunication {
     public void checarProtocolo(int acao) {
 
         switch (acao) {
-            case Protocol.EXEMPLE_TWO:
-                //acao
+            case Protocol.RESPOSTA_LOGIN:
+                System.out.println("P: " + dados.getProtocolo());
+                atualizarDados();
                 break;
-            case Protocol.GROUP_CREATE:
-                System.out.println("OK: " + this.mensagem.trim());
-                break;
+            case Protocol.RESPOSTA_LOGIN_FALHOU:
+                System.out.println("O Login falhou: Senha ou Pass incorreta!");
+            //    break;
             default:
         }
     }
 
-    public static void main(String[] args) {
+    private void atualizarDados() {
+        this.listGroup = (ArrayList<Group>) dados.getGrupos();
         
+        for(Group g : listGroup){
+            System.out.println(g.getName());
+        }
+    }
+
+    public static void main(String[] args) throws ClassNotFoundException {
+
         try {
-        
+
             TCPCommunication tc = new TCPCommunication();
             //Texto de teste
-            tc.executa("1#Uma mensagem");
+            tc.executa();
         } catch (IOException ex) {
-            
+
             Helper.printError(ex);
         }
     }
